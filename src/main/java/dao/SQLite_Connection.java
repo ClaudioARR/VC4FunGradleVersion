@@ -1,6 +1,7 @@
 package dao;
 
 import acciones_entidades.Actions_Materia;
+import entidades.Ejercicios;
 import entidades.Materia;
 import entidades.Tema;
 
@@ -40,7 +41,7 @@ public class SQLite_Connection {
     public void obtenerMaterias(String queryMateria) throws SQLException {
         this.Open();
         Materia.Materias.clear();
-        Materia materia = null;
+        Materia materia;
         sql = conexion.createStatement();
         results = sql.executeQuery(queryMateria);
         while (results.next()) {
@@ -52,10 +53,22 @@ public class SQLite_Connection {
         this.Cerrar();
     }
 
+    public void deleteMateria(Materia materia, String query) throws SQLException {
+        this.Open();
+
+        PreparedStatement pdst = conexion.prepareStatement(query);
+
+        pdst.setInt(1, materia.getIDMateria());
+
+        pdst.executeUpdate();
+
+        this.Cerrar();
+    }
+
     public void obtenerTemas(String queryTema) throws SQLException {
         this.Open();
         Tema.Temas.clear();
-        Tema tema = null;
+        Tema tema;
         sql = conexion.createStatement();
         results = sql.executeQuery(queryTema);
         while (results.next()) {
@@ -78,6 +91,62 @@ public class SQLite_Connection {
         pdst.setInt(2, tema.getMateria());
         pdst.setString(3, tema.getExplicacion_Tema());
         pdst.setInt(4, tema.getIDTema());
+
+        pdst.executeUpdate();
+
+        this.Cerrar();
+    }
+
+    public void deleteTema(Tema tema, String query) throws SQLException {
+        this.Open();
+
+        PreparedStatement pdst = conexion.prepareStatement(query);
+
+        pdst.setInt(1, tema.getIDTema());
+
+        pdst.executeUpdate();
+
+        this.Cerrar();
+    }
+
+    public void obtenerEjercicios(String queryEjercicio) throws SQLException {
+        this.Open();
+        Ejercicios.EjerciciosArray.clear();
+        Ejercicios ejercicios;
+        sql = conexion.createStatement();
+        results = sql.executeQuery(queryEjercicio);
+        while (results.next()) {
+            ejercicios = new Ejercicios();
+            ejercicios.setIDEjercicio(results.getInt(1));
+            ejercicios.setNombre_Ejercicio(results.getString(2));
+            ejercicios.setTema(results.getInt(3));
+            ejercicios.setPropiedades_Ejercicio(results.getString(4));
+            Ejercicios.EjerciciosArray.add(ejercicios);
+        }
+        this.Cerrar();
+    }
+
+    public void updateEjercicio(Ejercicios ejercicio, String query) throws SQLException {
+        this.Open();
+
+        PreparedStatement pdst = conexion.prepareStatement(query);
+
+        pdst.setString(1, ejercicio.getNombre_Ejercicio());
+        pdst.setInt(2, ejercicio.getTema());
+        pdst.setString(3, ejercicio.getPropiedades_Ejercicio());
+        pdst.setInt(4, ejercicio.getIDEjercicio());
+
+        pdst.executeUpdate();
+
+        this.Cerrar();
+    }
+
+    public void deleteEjercicio(Ejercicios ejercicio, String query) throws SQLException {
+        this.Open();
+
+        PreparedStatement pdst = conexion.prepareStatement(query);
+
+        pdst.setInt(1, ejercicio.getIDEjercicio());
 
         pdst.executeUpdate();
 

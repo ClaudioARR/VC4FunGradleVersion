@@ -16,7 +16,7 @@ public class Root extends Application {
         //  TOPSIDE ---------------------------------------------------------
 
         Label title = new Label("¡BIENVENIDO A LA CARPETA VIRTUAL!");
-        title.setFont(new Font("monospace", 30));
+        title.setFont(new Font("monospace", 25));
         title.setPadding(new Insets(10));
 
         Label subtitle = new Label("¿Que desea hacer?");
@@ -43,9 +43,7 @@ public class Root extends Application {
 
         Button agregar_ejercicio = new Button("Agregar Ejercicio");
         agregar_ejercicio.setFont(new Font(15));
-        agregar_ejercicio.setOnAction(event -> {
-            AgregarEjercicio.display();
-        });
+        agregar_ejercicio.setOnAction(event -> AgregarEjercicio.display());
 
         VBox leftside = new VBox();
         leftside.setSpacing(10);
@@ -60,13 +58,11 @@ public class Root extends Application {
 
         Button modificar_tema = new Button("Modificar Tema");
         modificar_tema.setFont(new Font(15));
-        modificar_tema.setOnAction(event -> {
-            ModificarTema.display();
-        });
+        modificar_tema.setOnAction(event -> ModificarTema.display());
 
         Button modificar_ejercicio = new Button("Modificar Ejercicio");
         modificar_ejercicio.setFont(new Font(15));
-        modificar_ejercicio.setOnAction(event -> {});
+        modificar_ejercicio.setOnAction(event -> ModificarEjercicio.display());
 
         VBox centerside = new VBox();
         centerside.setSpacing(10);
@@ -74,6 +70,30 @@ public class Root extends Application {
         centerside.setPadding(new Insets(10,10,10,15));
 
         return centerside;
+    }
+
+    private VBox RIGHTSIDE(){
+        // RIGHTSIDE
+
+        Button eliminar_materia = new Button("Eliminar Materia");
+        eliminar_materia.setFont(new Font(15));
+        eliminar_materia.setOnAction(event -> EliminarMateria.display());
+
+        Button eliminar_tema = new Button("Eliminar Tema");
+        eliminar_tema.setFont(new Font(15));
+        eliminar_tema.setOnAction(event -> EliminarTema.display());
+
+        Button eliminar_ejercicio = new Button("Eliminar Ejercicio");
+        eliminar_ejercicio.setFont(new Font(15));
+        eliminar_ejercicio.setOnAction(event -> EliminarEjercicio.display());
+
+        VBox rightside = new VBox();
+        rightside.setSpacing(10);
+        rightside.getChildren().addAll(eliminar_materia,eliminar_tema, eliminar_ejercicio);
+        rightside.setPadding(new Insets(10,10,10,15));
+
+        return rightside;
+
     }
 
 
@@ -87,8 +107,9 @@ public class Root extends Application {
         root.setTop(TOPSIDE());
         root.setLeft(LEFTSIDE());
         root.setCenter(CENTERSIDE());
+        root.setRight(RIGHTSIDE());
 
-        Scene scene = new Scene(root, 600, 300);
+        Scene scene = new Scene(root, 500, 300);
         scene.getStylesheets().add("style/Style.css");
         primaryStage.setScene(scene);
         primaryStage.show();

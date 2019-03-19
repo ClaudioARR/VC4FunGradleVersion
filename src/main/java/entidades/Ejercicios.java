@@ -1,11 +1,15 @@
 package entidades;
 
+import java.util.ArrayList;
+
 public class Ejercicios {
 
     private int IDEjercicio;
     private String Nombre_Ejercicio;
     private int Tema;
     private String Propiedades_Ejercicio;
+
+    public static ArrayList<Ejercicios> EjerciciosArray = new ArrayList<>();
 
     public Ejercicios() {
     }

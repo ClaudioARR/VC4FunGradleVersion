@@ -24,4 +24,22 @@ public class Actions_Ejercicios {
                 ejercicio.getTema() +",'" +
                 ejercicio.getPropiedades_Ejercicio() +"');");
     }
+
+    public static void getEjercicios() throws SQLException {
+        String query = "SELECT idejercicio, ejercicio, Tema, propiedades FROM Ejercicios";
+        sqlite.obtenerEjercicios(query);
+    }
+
+    public static void updateEjercicio(Ejercicios ejercicio) throws SQLException {
+        String query = "UPDATE Ejercicios SET ejercicio = ? , "
+                + "Tema = ? ,"
+                + "propiedades = ? "
+                + "WHERE idejercicio = ?";
+        sqlite.updateEjercicio(ejercicio, query);
+    }
+
+    public static void deleteEjercicio(Ejercicios ejercicio) throws SQLException {
+        String query = "DELETE FROM Ejercicios WHERE idejercicio = ?";
+        sqlite.deleteEjercicio(ejercicio, query);
+    }
 }

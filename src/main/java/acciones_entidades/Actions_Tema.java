@@ -37,4 +37,9 @@ public  class  Actions_Tema {
                 + "WHERE idtema = ?";
         sqlite.updateTema(tema, query);
     }
+
+    public static void deleteTema(Tema tema) throws SQLException {
+        String query = "DELETE FROM Tema WHERE idtema = ?";
+        sqlite.deleteTema(tema, query);
+    }
 }

@@ -29,5 +29,10 @@ public  class  Actions_Materia {
          sqlite.obtenerMaterias(query);
     }
 
+    public static void deleteMateria(Materia materia) throws SQLException {
+        String query = "DELETE FROM Materia WHERE idmateria = ?";
+        sqlite.deleteMateria(materia, query);
+    }
+
 
 }
