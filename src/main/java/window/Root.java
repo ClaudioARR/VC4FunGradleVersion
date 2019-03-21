@@ -2,10 +2,12 @@ package window;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -96,6 +98,20 @@ public class Root extends Application {
 
     }
 
+    private StackPane BOTSIDE(){
+        Button btnEstudiar = new Button("ESTUDIAR!");
+        btnEstudiar.setFont(new Font(15));
+        btnEstudiar.setOnAction(event -> EstudiarWindow.display());
+
+        StackPane botside = new StackPane();
+        botside.setAlignment(Pos.CENTER);
+        botside.setPadding(new Insets(10));
+
+        botside.getChildren().add(btnEstudiar);
+
+        return botside;
+    }
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -108,6 +124,7 @@ public class Root extends Application {
         root.setLeft(LEFTSIDE());
         root.setCenter(CENTERSIDE());
         root.setRight(RIGHTSIDE());
+        root.setBottom(BOTSIDE());
 
         Scene scene = new Scene(root, 500, 300);
         scene.getStylesheets().add("style/Style.css");

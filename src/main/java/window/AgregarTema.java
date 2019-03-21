@@ -20,6 +20,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import windows_helpers.Window_Dialog;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.sql.SQLException;
 
 class AgregarTema {
@@ -28,6 +31,42 @@ class AgregarTema {
     static private TextField txtnombretema = new TextField();
     static private ComboBox<String> cmbMaterias;
     static private TextArea taexplicaciontema = new TextArea();
+
+    static private void generatePage(Tema tema){
+        String explicacionlatex = "<!DOCTYPE html>\n" +
+                " <html>\n" +
+                " <head>\n" +
+                "  <script type=\"text/x-mathjax-config\">\n" +
+                "   MathJax.Hub.Config({     tex2jax: {inlineMath: [[\"$\",\"$\"],[\"\\\\(\",\"\\\\)\"]]}   });\n" +
+                " </script>\n" +
+                " <script type=\"text/javascript\" src=\"../MathJax/MathJax.js?config=TeX-AMS_HTML-full\">\n" +
+                "</script>\n" +
+                "  </head>\n" +
+                " <body>\n" +
+                tema.getExplicacion_Tema() + "\n" +
+                "</body>\n" +
+                "</html>";
+
+        char[] aux = tema.getNombre_Tema().toCharArray();
+        for(int i = 0; i < aux.length; i++){
+            if (aux[i] == ' '){
+                aux[i] = '_';
+            }
+        }
+        String namePage = new String(aux);
+        FileOutputStream archivo;
+        String texto = explicacionlatex;
+        PrintStream p;
+
+        try {
+            archivo = new FileOutputStream("pages/" + namePage + ".html");
+
+            p = new PrintStream(archivo);
+            p.println(texto);
+            p.close();
+        } catch (FileNotFoundException e1) {
+        }
+    }
 
     static private StackPane TOPSIDE(){
         // TOPSIDE -------------------------------
@@ -75,6 +114,7 @@ class AgregarTema {
             }
         });
          cmbMaterias = new ComboBox<>(items);
+         cmbMaterias.setPromptText("Elija Materia");
 
 
         taexplicaciontema.setWrapText(true);
@@ -110,6 +150,7 @@ class AgregarTema {
                 int idmateria = cmbMaterias.getSelectionModel().getSelectedIndex();
                 Tema tema = new Tema(txtnombretema.getText(), Materia.Materias.get(idmateria).getIDMateria() ,taexplicaciontema.getText());
                 Actions_Tema.insertarTema(tema);
+                generatePage(tema);
                 txtnombretema.setText("");
                 taexplicaciontema.setText("");
                 Window_Dialog.display("Exito!","Tema agregado satisfactoriamente!");

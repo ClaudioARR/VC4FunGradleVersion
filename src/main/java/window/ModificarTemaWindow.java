@@ -18,6 +18,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import windows_helpers.Window_Dialog;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.sql.SQLException;
 
 class ModificarTemaWindow {
@@ -27,6 +30,42 @@ class ModificarTemaWindow {
     static private  TextField nombretema = new TextField();
     static private  TextField materiatema = new TextField();
     static private  TextArea explicaciontema = new TextArea();
+
+    static private void generatePage(Tema tema){
+        String explicacionlatex = "<!DOCTYPE html>\n" +
+                " <html>\n" +
+                " <head>\n" +
+                "  <script type=\"text/x-mathjax-config\">\n" +
+                "   MathJax.Hub.Config({     tex2jax: {inlineMath: [[\"$\",\"$\"],[\"\\\\(\",\"\\\\)\"]]}   });\n" +
+                " </script>\n" +
+                " <script type=\"text/javascript\" src=\"../MathJax/MathJax.js?config=TeX-AMS_HTML-full\">\n" +
+                "</script>\n" +
+                "  </head>\n" +
+                " <body>\n" +
+                tema.getExplicacion_Tema() + "\n" +
+                "</body>\n" +
+                "</html>";
+
+        char[] aux = tema.getNombre_Tema().toCharArray();
+        for(int i = 0; i < aux.length; i++){
+            if (aux[i] == ' '){
+                aux[i] = '_';
+            }
+        }
+        String namePage = new String(aux);
+        FileOutputStream archivo;
+        String texto = explicacionlatex;
+        PrintStream p;
+
+        try {
+            archivo = new FileOutputStream("pages/" + namePage + ".html");
+
+            p = new PrintStream(archivo);
+            p.println(texto);
+            p.close();
+        } catch (FileNotFoundException e1) {
+        }
+    }
 
     static private GridPane TOPSIDE(Tema tema){
         Label lblidtema = new Label("ID Tema");
@@ -98,6 +137,7 @@ class ModificarTemaWindow {
                 tema.setExplicacion_Tema(explicacionT);
 
                 Actions_Tema.updateTema(tema);
+                generatePage(tema);
 
                 Window_Dialog.display("Modificar Tema", "Tema Modificado Exitosamente");
 

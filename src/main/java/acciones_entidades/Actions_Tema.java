@@ -30,6 +30,20 @@ public  class  Actions_Tema {
         sqlite.obtenerTemas(query);
     }
 
+    public static void getTemasForMaterias(int Materia) throws SQLException {
+        String query = "SELECT idtema, nombreTema, Materia, explicacionTema" +
+                " FROM Tema" +
+                " WHERE Materia = " + Materia;
+        sqlite.obtenerTemas(query);
+    }
+
+    public static void getExplicacion(String nombreTema) throws SQLException{
+        String query = "SELECT idtema, nombreTema, Materia, explicacionTema" +
+                " FROM Tema" +
+                " WHERE nombreTema = '" + nombreTema + "'";
+        sqlite.obtenerTemas(query);
+    }
+
     public static void updateTema(Tema tema) throws SQLException {
         String query = "UPDATE Tema SET nombreTema = ? , "
                 + "Materia = ? ,"
