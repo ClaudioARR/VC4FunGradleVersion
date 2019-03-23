@@ -25,17 +25,16 @@ import utilities.Utilities;
 import java.io.File;
 import java.sql.SQLException;
 
-class EstudiarWindow {
-    static private Stage window = new Stage();
-    static private WebEngine weLatex;
+class EstudiarWindow extends Stage {
+    private WebEngine weLatex;
 
-    private static VBox LEFTSIDE(){
+    private VBox LEFTSIDE(){
         ObservableList<String> itemsM = FXCollections.observableArrayList();
         ObservableList<String> itemsT = FXCollections.observableArrayList();
         ObservableList<String> itemsE = FXCollections.observableArrayList();
 
 
-        window.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
+        addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
             try {
                 itemsM.clear();
                 Actions_Materia.getMaterias();
@@ -107,7 +106,7 @@ class EstudiarWindow {
 
     }
 
-    static StackPane CENTERSIDE(){
+    private StackPane CENTERSIDE(){
         WebView wvLatex = new WebView();
         weLatex = wvLatex.getEngine();
 
@@ -121,10 +120,11 @@ class EstudiarWindow {
 
     }
 
-    static void display(){
-
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Estudiar");
+    EstudiarWindow(Stage owner){
+        super();
+        initOwner(owner);
+        initModality(Modality.APPLICATION_MODAL);
+        setTitle("Estudiar");
 
         // ROOT -----------------------------
 
@@ -138,7 +138,6 @@ class EstudiarWindow {
         Scene scene = new Scene(root, 650, 400);
         scene.getStylesheets().add("style/Style.css");
 
-        window.setScene(scene);
-        window.show();
+        setScene(scene);
     }
 }

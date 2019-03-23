@@ -21,15 +21,13 @@ import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
 
-class ModificarEjercicioWindow {
+class ModificarEjercicioWindow extends Stage{
+    private  TextField idejercicio = new TextField();
+    private  TextField nombreejercicio = new TextField();
+    private  TextField temaejercicio = new TextField();
+    private  TextArea respuestaejercicio = new TextArea();
 
-    static private  Stage window = new Stage();
-    static private  TextField idejercicio = new TextField();
-    static private  TextField nombreejercicio = new TextField();
-    static private  TextField temaejercicio = new TextField();
-    static private  TextArea respuestaejercicio = new TextArea();
-
-    static private GridPane TOPSIDE(Ejercicios ejercicio){
+    private GridPane TOPSIDE(Ejercicios ejercicio){
         Label lblidejercicio = new Label("ID Ejercicio");
         Label lblnombreejercicio = new Label("Ejercicio");
         Label lbltemaejercicio = new Label("Ejercicio Tema");
@@ -64,7 +62,7 @@ class ModificarEjercicioWindow {
         return topside;
     }
 
-    static private VBox CENTERSIDE(Ejercicios ejercicio){
+    private VBox CENTERSIDE(Ejercicios ejercicio){
         Label lblrespuestaejercicio = new Label("Respuesta");
 
 
@@ -80,7 +78,7 @@ class ModificarEjercicioWindow {
         return centerside;
     }
 
-    static private StackPane BOTSIDE(){
+    private StackPane BOTSIDE(){
         Button btnModificarEjercicio = new Button("Modificar");
         btnModificarEjercicio.setPadding(new Insets(10));
         btnModificarEjercicio.setFont(new Font(15));
@@ -103,7 +101,7 @@ class ModificarEjercicioWindow {
 
                 Window_Dialog.display("Modificar Ejercicio", "Ejercicio Modificado Exitosamente");
 
-                window.close();
+                close();
 
             }catch (SQLException ex){
                 Window_Dialog.display("Modificar Ejercicio", "Error al modificar ejercicio " + ex.getMessage());
@@ -119,23 +117,25 @@ class ModificarEjercicioWindow {
         return botside;
     }
 
-    static void display(Ejercicios ejercicio){
+    ModificarEjercicioWindow(Ejercicios ejercicio, Stage owner){
+        super();
+        initOwner(owner);
+
         BorderPane root = new BorderPane();
         root.setTop(TOPSIDE(ejercicio));
         root.setCenter(CENTERSIDE(ejercicio));
         root.setBottom(BOTSIDE());
 
 
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Modificar Ejercicio");
+        initModality(Modality.APPLICATION_MODAL);
+        setTitle("Modificar Ejercicio");
 
         // SCENE ----------------------------
 
         Scene scene = new Scene(root, 650, 350);
         scene.getStylesheets().add("style/Style.css");
 
-        window.setScene(scene);
-        window.show();
+        setScene(scene);
 
     }
 }

@@ -53,10 +53,10 @@ public class Utilities {
         }
     }
 
-    static public void eliminarPageT(Tema tema){
+    static public boolean eliminarPageT(Tema tema){
         String page = getFileName(tema.getNombre_Tema());
         File file = new File("pages/" + page + ".html");
-        file.delete();
+        return file.delete();
     }
 
 
@@ -92,9 +92,9 @@ public class Utilities {
         }
     }
 
-    static public void eliminarPageE(Ejercicios ejercicio){
+    static public boolean eliminarPageE(Ejercicios ejercicio){
         String page = String.valueOf(ejercicio.getIDEjercicio());
         File file = new File("pages/exercises/" + page + ".html");
-        file.delete();
+        return file.delete();
     }
 }

@@ -31,21 +31,33 @@ public class Root extends Application {
         return topside;
     }
 
-    private VBox LEFTSIDE(){
+    private VBox LEFTSIDE(Stage owner){
         //  LEFTSIDE -----------------------------------------------------
 
         Button agregar_materia = new Button("Agregar Materia");
         agregar_materia.setFont(new Font(15));
-        agregar_materia.setOnAction(event -> AgregarMateria.display());
+        agregar_materia.setOnAction(event -> {
+            AgregarMateria agregarMateriaW = new AgregarMateria(owner);
+            agregarMateriaW.sizeToScene();
+            agregarMateriaW.show();
+        });
 
 
         Button agregar_tema = new Button("Agregar Tema");
         agregar_tema.setFont(new Font(15));
-        agregar_tema.setOnAction(event -> AgregarTema.display());
+        agregar_tema.setOnAction(event -> {
+            AgregarTema agregarTemaW = new AgregarTema(owner);
+            agregarTemaW.sizeToScene();
+            agregarTemaW.show();
+        });
 
         Button agregar_ejercicio = new Button("Agregar Ejercicio");
         agregar_ejercicio.setFont(new Font(15));
-        agregar_ejercicio.setOnAction(event -> AgregarEjercicio.display());
+        agregar_ejercicio.setOnAction(event -> {
+            AgregarEjercicio agregarEjercicioW = new AgregarEjercicio(owner);
+            agregarEjercicioW.sizeToScene();
+            agregarEjercicioW.show();
+        });
 
         VBox leftside = new VBox();
         leftside.setSpacing(10);
@@ -55,16 +67,20 @@ public class Root extends Application {
         return leftside;
     }
 
-    private VBox CENTERSIDE(){
+    private VBox CENTERSIDE(Stage owner){
         // CENTERSIDE
 
         Button modificar_tema = new Button("Modificar Tema");
         modificar_tema.setFont(new Font(15));
-        modificar_tema.setOnAction(event -> ModificarTema.display());
+        modificar_tema.setOnAction(event -> {
+            ModificarTema modificarTemaW = new ModificarTema(owner);
+        });
 
         Button modificar_ejercicio = new Button("Modificar Ejercicio");
         modificar_ejercicio.setFont(new Font(15));
-        modificar_ejercicio.setOnAction(event -> ModificarEjercicio.display());
+        modificar_ejercicio.setOnAction(event -> {
+            ModificarEjercicio modificarEjercicioW = new ModificarEjercicio(owner);
+        });
 
         VBox centerside = new VBox();
         centerside.setSpacing(10);
@@ -74,20 +90,34 @@ public class Root extends Application {
         return centerside;
     }
 
-    private VBox RIGHTSIDE(){
+    private VBox RIGHTSIDE(Stage owner){
         // RIGHTSIDE
 
         Button eliminar_materia = new Button("Eliminar Materia");
         eliminar_materia.setFont(new Font(15));
-        eliminar_materia.setOnAction(event -> EliminarMateria.display());
+        eliminar_materia.setOnAction(event -> {
+            EliminarMateria eliminarMateriaW = new EliminarMateria(owner);
+            eliminarMateriaW.sizeToScene();
+            eliminarMateriaW.show();
+        });
 
         Button eliminar_tema = new Button("Eliminar Tema");
         eliminar_tema.setFont(new Font(15));
-        eliminar_tema.setOnAction(event -> EliminarTema.display());
+        eliminar_tema.setOnAction(event -> {
+
+            EliminarTema eliminarTemaW = new EliminarTema(owner);
+            eliminarTemaW.sizeToScene();
+            eliminarTemaW.show();
+        });
 
         Button eliminar_ejercicio = new Button("Eliminar Ejercicio");
         eliminar_ejercicio.setFont(new Font(15));
-        eliminar_ejercicio.setOnAction(event -> EliminarEjercicio.display());
+        eliminar_ejercicio.setOnAction(event -> {
+
+            EliminarEjercicio eliminarEjercicioW = new EliminarEjercicio(owner);
+            eliminarEjercicioW.sizeToScene();
+            eliminarEjercicioW.show();
+        });
 
         VBox rightside = new VBox();
         rightside.setSpacing(10);
@@ -98,10 +128,15 @@ public class Root extends Application {
 
     }
 
-    private StackPane BOTSIDE(){
+    private StackPane BOTSIDE(Stage owner){
         Button btnEstudiar = new Button("ESTUDIAR!");
         btnEstudiar.setFont(new Font(15));
-        btnEstudiar.setOnAction(event -> EstudiarWindow.display());
+        btnEstudiar.setOnAction(event -> {
+
+            EstudiarWindow estudiarWindowW = new EstudiarWindow(owner);
+            estudiarWindowW.sizeToScene();
+            estudiarWindowW.show();
+        });
 
         StackPane botside = new StackPane();
         botside.setAlignment(Pos.CENTER);
@@ -121,11 +156,10 @@ public class Root extends Application {
 
         BorderPane root = new BorderPane();
         root.setTop(TOPSIDE());
-        root.setLeft(LEFTSIDE());
-        root.setCenter(CENTERSIDE());
-        root.setRight(RIGHTSIDE());
-        root.setBottom(BOTSIDE());
-        //TODO: AGREGAR FUNCIONALIDAD PARA PODER ABRIR MAS DE 1 VEZ UNA VENTANA
+        root.setLeft(LEFTSIDE(primaryStage));
+        root.setCenter(CENTERSIDE(primaryStage));
+        root.setRight(RIGHTSIDE(primaryStage));
+        root.setBottom(BOTSIDE(primaryStage));
 
         Scene scene = new Scene(root, 500, 300);
         scene.getStylesheets().add("style/Style.css");

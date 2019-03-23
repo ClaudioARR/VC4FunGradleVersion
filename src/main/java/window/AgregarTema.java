@@ -22,15 +22,13 @@ import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
 
-class AgregarTema {
-
-    static private Stage window = new Stage();
-    static private TextField txtnombretema = new TextField();
-    static private ComboBox<String> cmbMaterias;
-    static private TextArea taexplicaciontema = new TextArea();
+class AgregarTema extends Stage {
+    private TextField txtnombretema = new TextField();
+    private ComboBox<String> cmbMaterias;
+    private TextArea taexplicaciontema = new TextArea();
 
 
-    static private StackPane TOPSIDE(){
+    private StackPane TOPSIDE(){
         // TOPSIDE -------------------------------
 
         Label title = new Label("AGREGAR TEMA");
@@ -45,7 +43,7 @@ class AgregarTema {
 
     }
 
-    static private GridPane CENTERSIDE(){
+    private GridPane CENTERSIDE(){
         // CENTERSIDE -----------------------------
 
         Label nombretema = new Label("Nombre Tema");
@@ -61,7 +59,7 @@ class AgregarTema {
         ObservableList<String> items = FXCollections.observableArrayList();
 
 
-        window.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
+        addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
             try {
                 Actions_Materia.getMaterias();
                 for (Materia m:Materia.Materias) {
@@ -97,7 +95,7 @@ class AgregarTema {
         return centerside;
     }
 
-    static private StackPane BOTTOMSIDE(){
+    private StackPane BOTTOMSIDE(){
         // BOTTOMSIDE -----------------------------
 
         Button agregarT = new Button("Agregar Tema");
@@ -127,10 +125,11 @@ class AgregarTema {
         return botside;
     }
 
-    static void display(){
-
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Agregar Tema");
+    AgregarTema(Stage owner){
+        super();
+        initOwner(owner);
+        initModality(Modality.APPLICATION_MODAL);
+        setTitle("Agregar Tema");
 
         // ROOT -----------------------------
 
@@ -145,8 +144,7 @@ class AgregarTema {
         Scene scene = new Scene(root, 650, 400);
         scene.getStylesheets().add("style/Style.css");
 
-        window.setScene(scene);
-        window.show();
+        setScene(scene);
     }
 
 

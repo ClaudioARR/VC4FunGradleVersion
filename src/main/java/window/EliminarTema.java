@@ -18,13 +18,11 @@ import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
 
-class EliminarTema {
-
-    static private Stage window = new Stage();
-    static private TableView<Tema> table_tema;
+class EliminarTema extends Stage {
+    private TableView<Tema> table_tema;
 
 
-    static private StackPane  CENTERSIDE(){
+    private StackPane  CENTERSIDE(){
         // CENTERSIDE -----------------------------
 
         table_tema = new TableView<>();
@@ -36,7 +34,7 @@ class EliminarTema {
 
         table_tema.getColumns().addAll(colID, colNombre,colMateria, colExplicacion);
 
-        window.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
+        addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
             try {
                 Actions_Tema.getTemas();
                 colID.setCellValueFactory(new PropertyValueFactory<>("IDTema"));
@@ -68,7 +66,7 @@ class EliminarTema {
 
     }
 
-    static private StackPane BOTTOMSIDE(){
+    private StackPane BOTTOMSIDE(){
         // BOTTOMSIDE -----------------------------
 
         Button eliminarT = new Button("Eliminar Tema Seleccionado");
@@ -96,10 +94,11 @@ class EliminarTema {
         return botside;
     }
 
-    static void display(){
-
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Eliminar Tema");
+    EliminarTema(Stage owner){
+        super();
+        initOwner(owner);
+        initModality(Modality.APPLICATION_MODAL);
+        setTitle("Eliminar Tema");
 
         // ROOT -----------------------------
 
@@ -113,8 +112,7 @@ class EliminarTema {
         Scene scene = new Scene(root, 650, 400);
         scene.getStylesheets().add("style/Style.css");
 
-        window.setScene(scene);
-        window.show();
+        setScene(scene);
     }
 
 

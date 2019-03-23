@@ -18,12 +18,10 @@ import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
 
-class AgregarMateria {
+class AgregarMateria extends Stage {
+    private TextField txtnombremateria = new TextField();
 
-    static private Stage window = new Stage();
-    static private TextField txtnombremateria = new TextField();
-
-   static private StackPane TOPSIDE(){
+    private StackPane TOPSIDE(){
        // TOPSIDE -------------------------------
 
        Label title = new Label("AGREGAR MATERIA");
@@ -37,7 +35,7 @@ class AgregarMateria {
        return topside;
    }
 
-   static private GridPane CENTERSIDE(){
+   private GridPane CENTERSIDE(){
        // CENTERSIDE -----------------------------
 
        Label nombremateria = new Label("Nombre Materia");
@@ -59,7 +57,7 @@ class AgregarMateria {
        return centerside;
    }
 
-   static private StackPane BOTSIDE(){
+   private StackPane BOTSIDE(){
        // BOTTOMSIDE -----------------------------
 
        Button agregarM = new Button("Agregar Materia");
@@ -86,9 +84,11 @@ class AgregarMateria {
        return  botside;
    }
 
-   static void display(){
-       window.initModality(Modality.APPLICATION_MODAL);
-       window.setTitle("Agregar Materia");
+    AgregarMateria(Stage owner){
+       super();
+       initOwner(owner);
+       initModality(Modality.APPLICATION_MODAL);
+       setTitle("Agregar Materia");
 
        // ROOT -----------------------------
 
@@ -103,8 +103,8 @@ class AgregarMateria {
        Scene scene = new Scene(root, 300, 150);
        scene.getStylesheets().add("style/Style.css");
 
-       window.setScene(scene);
-       window.show();
+       setScene(scene);
+
    }
 
 

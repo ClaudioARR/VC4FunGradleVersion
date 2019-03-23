@@ -17,13 +17,13 @@ import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
 
-class ModificarTema {
+class ModificarTema extends Stage {
 
-    static private Stage window = new Stage();
-    static private TableView<Tema> table_tema;
+    private Stage window = new Stage();
+    private TableView<Tema> table_tema;
 
 
-    static private StackPane  CENTERSIDE(){
+    private StackPane  CENTERSIDE(){
         // CENTERSIDE -----------------------------
 
         table_tema = new TableView<>();
@@ -67,7 +67,7 @@ class ModificarTema {
 
     }
 
-    static private StackPane BOTTOMSIDE(){
+    private StackPane BOTTOMSIDE(){
         // BOTTOMSIDE -----------------------------
 
         Button modificarT = new Button("Modificar Tema Seleccionado");
@@ -75,8 +75,11 @@ class ModificarTema {
         modificarT.setFont(new Font(15));
 
         modificarT.setOnAction(event -> {
+
             Tema tema  = table_tema.getSelectionModel().getSelectedItem();
-            ModificarTemaWindow.display(tema);
+            ModificarTemaWindow modificarTemaWindow = new ModificarTemaWindow(tema, window);
+            modificarTemaWindow.sizeToScene();
+            modificarTemaWindow.show();
         });
 
         StackPane botside = new StackPane();
@@ -87,8 +90,9 @@ class ModificarTema {
         return botside;
     }
 
-    static void display(){
-
+    ModificarTema(Stage owner){
+        super();
+        window.initOwner(owner);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Modificar Tema");
 

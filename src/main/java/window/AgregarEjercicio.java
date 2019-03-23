@@ -22,16 +22,15 @@ import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
 
-class AgregarEjercicio {
+class AgregarEjercicio extends Stage {
 
-    static private Stage window = new Stage();
-    static private TextArea taejercicio = new TextArea();
-    static private ComboBox<String> cmbTemas;
-    static private TextArea tapropiedadesejercicio = new TextArea();
-
+    private TextArea taejercicio = new TextArea();
+    private ComboBox<String> cmbTemas;
+    private TextArea tapropiedadesejercicio = new TextArea();
 
 
-    static private StackPane TOPSIDE(){
+
+    private StackPane TOPSIDE(){
         // TOPSIDE -------------------------------
 
         Label title = new Label("AGREGAR EJERCICIO");
@@ -46,7 +45,7 @@ class AgregarEjercicio {
     }
 
 
-    static private GridPane CENTERSIDE(){
+    private GridPane CENTERSIDE(){
 
         // CENTERSIDE -----------------------------
 
@@ -64,7 +63,7 @@ class AgregarEjercicio {
         ObservableList<String> items = FXCollections.observableArrayList();
 
 
-        window.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
+        addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
             try {
                 Actions_Tema.getTemas();
                 for (Tema t:Tema.Temas) {
@@ -101,7 +100,7 @@ class AgregarEjercicio {
         return centerside;
     }
 
-    static private StackPane BOTTOMSIDE(){
+    private StackPane BOTTOMSIDE(){
 
         // BOTTOMSIDE -----------------------------
 
@@ -133,10 +132,11 @@ class AgregarEjercicio {
         return botside;
     }
 
-    static void display(){
-
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Agregar Ejercicio");
+     AgregarEjercicio(Stage owner){
+        super();
+        initOwner(owner);
+        initModality(Modality.APPLICATION_MODAL);
+        setTitle("Agregar Ejercicio");
 
 
         // ROOT -----------------------------
@@ -152,8 +152,7 @@ class AgregarEjercicio {
         Scene scene = new Scene(root, 650, 400);
         scene.getStylesheets().add("style/Style.css");
 
-        window.setScene(scene);
-        window.show();
+        setScene(scene);
     }
 
 

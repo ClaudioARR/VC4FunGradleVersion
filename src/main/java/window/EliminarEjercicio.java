@@ -18,13 +18,11 @@ import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
 
-class EliminarEjercicio {
-
-    static private Stage window = new Stage();
-    static private TableView<Ejercicios> table_ejercicio;
+class EliminarEjercicio extends Stage {
+    private TableView<Ejercicios> table_ejercicio;
 
 
-    static private StackPane  CENTERSIDE(){
+    private StackPane  CENTERSIDE(){
         // CENTERSIDE -----------------------------
 
         table_ejercicio = new TableView<>();
@@ -36,7 +34,7 @@ class EliminarEjercicio {
 
         table_ejercicio.getColumns().addAll(colID, colNombre, colTema, colRespuesta);
 
-        window.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
+        addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
             try {
                 Actions_Ejercicios.getEjercicios();
                 colID.setCellValueFactory(new PropertyValueFactory<>("IDEjercicio"));
@@ -68,7 +66,7 @@ class EliminarEjercicio {
 
     }
 
-    static private StackPane BOTTOMSIDE(){
+    private StackPane BOTTOMSIDE(){
         // BOTTOMSIDE -----------------------------
 
         Button eliminarE = new Button("Eliminar Ejercicio Seleccionado");
@@ -96,10 +94,11 @@ class EliminarEjercicio {
         return botside;
     }
 
-    static void display(){
-
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Eliminar Ejercicio");
+    EliminarEjercicio(Stage owner){
+        super();
+        initOwner(owner);
+        initModality(Modality.APPLICATION_MODAL);
+        setTitle("Eliminar Ejercicio");
 
         // ROOT -----------------------------
 
@@ -113,8 +112,7 @@ class EliminarEjercicio {
         Scene scene = new Scene(root, 650, 400);
         scene.getStylesheets().add("style/Style.css");
 
-        window.setScene(scene);
-        window.show();
+        setScene(scene);
     }
 
 

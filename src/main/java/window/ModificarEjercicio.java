@@ -17,13 +17,13 @@ import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
 
-class ModificarEjercicio {
+class ModificarEjercicio extends Stage {
 
-    static private Stage window = new Stage();
-    static private TableView<Ejercicios> table_ejercicio;
+    private Stage window = new Stage();
+    private TableView<Ejercicios> table_ejercicio;
 
 
-    static private StackPane  CENTERSIDE(){
+    private StackPane  CENTERSIDE(){
         // CENTERSIDE -----------------------------
 
         table_ejercicio = new TableView<>();
@@ -67,7 +67,7 @@ class ModificarEjercicio {
 
     }
 
-    static private StackPane BOTTOMSIDE(){
+    private StackPane BOTTOMSIDE(){
         // BOTTOMSIDE -----------------------------
 
         Button modificarE = new Button("Modificar Ejercicio Seleccionado");
@@ -75,8 +75,11 @@ class ModificarEjercicio {
         modificarE.setFont(new Font(15));
 
         modificarE.setOnAction(event -> {
+
             Ejercicios ejercicio  = table_ejercicio.getSelectionModel().getSelectedItem();
-            ModificarEjercicioWindow.display(ejercicio);
+            ModificarEjercicioWindow modificarEjercicioWindow = new ModificarEjercicioWindow(ejercicio, window);
+            modificarEjercicioWindow.sizeToScene();
+            modificarEjercicioWindow.show();
         });
 
         StackPane botside = new StackPane();
@@ -87,8 +90,9 @@ class ModificarEjercicio {
         return botside;
     }
 
-    static void display(){
-
+    ModificarEjercicio(Stage owner){
+        super();
+        window.initOwner(owner);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Modificar Ejercicio");
 
