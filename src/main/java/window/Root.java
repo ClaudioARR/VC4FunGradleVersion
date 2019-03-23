@@ -125,6 +125,7 @@ public class Root extends Application {
         root.setCenter(CENTERSIDE());
         root.setRight(RIGHTSIDE());
         root.setBottom(BOTSIDE());
+        //TODO: AGREGAR FUNCIONALIDAD PARA PODER ABRIR MAS DE 1 VEZ UNA VENTANA
 
         Scene scene = new Scene(root, 500, 300);
         scene.getStylesheets().add("style/Style.css");

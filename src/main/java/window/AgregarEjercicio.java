@@ -6,7 +6,6 @@ import entidades.Ejercicios;
 import entidades.Tema;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import utilities.Utilities;
 import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
@@ -64,21 +64,19 @@ class AgregarEjercicio {
         ObservableList<String> items = FXCollections.observableArrayList();
 
 
-        window.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                try {
-                    Actions_Tema.getTemas();
-                    for (Tema t:Tema.Temas) {
-                        items.add(t.getNombre_Tema());
-                    }
-
-                } catch (SQLException e) {
-                    e.printStackTrace();
+        window.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
+            try {
+                Actions_Tema.getTemas();
+                for (Tema t:Tema.Temas) {
+                    items.add(t.getNombre_Tema());
                 }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         });
         cmbTemas = new ComboBox<>(items);
+        cmbTemas.setPromptText("Elija Tema");
 
 
         tapropiedadesejercicio.setWrapText(true);
@@ -116,6 +114,8 @@ class AgregarEjercicio {
                 int idtema = cmbTemas.getSelectionModel().getSelectedIndex();
                 Ejercicios ejercicio = new Ejercicios(taejercicio.getText(), Tema.Temas.get(idtema).getIDTema() ,tapropiedadesejercicio.getText());
                 Actions_Ejercicios.insertarEjercicios(ejercicio);
+                Actions_Ejercicios.getEjercicios();
+                Utilities.generatePageE(Ejercicios.EjerciciosArray.get(Ejercicios.EjerciciosArray.size() - 1));
                 taejercicio.setText("");
                 tapropiedadesejercicio.setText("");
                 Window_Dialog.display("Exito!","Ejercicio agregado satisfactoriamente!");

@@ -1,11 +1,7 @@
 package window;
 
 import acciones_entidades.Actions_Ejercicios;
-import acciones_entidades.Actions_Materia;
-import acciones_entidades.Actions_Tema;
 import entidades.Ejercicios;
-import entidades.Materia;
-import entidades.Tema;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import utilities.Utilities;
 import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
@@ -82,6 +79,7 @@ class EliminarEjercicio {
             try
             {
                 Ejercicios ejercicio  = table_ejercicio.getSelectionModel().getSelectedItem();
+                Utilities.eliminarPageE(ejercicio);
                 Actions_Ejercicios.deleteEjercicio(ejercicio);
 
                 Window_Dialog.display("Elminar Ejercicio", "Ejercicio borrado exitosamente");

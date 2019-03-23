@@ -9,11 +9,7 @@ public class Actions_Ejercicios {
     static private SQLite_Connection sqlite;
 
     static {
-        try {
-            sqlite = new SQLite_Connection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        sqlite = new SQLite_Connection();
     }
 
     // CRUD
@@ -27,6 +23,11 @@ public class Actions_Ejercicios {
 
     public static void getEjercicios() throws SQLException {
         String query = "SELECT idejercicio, ejercicio, Tema, propiedades FROM Ejercicios";
+        sqlite.obtenerEjercicios(query);
+    }
+
+    public static void getEjercicioPorTema(int idtema) throws SQLException {
+        String query = "SELECT idejercicio, ejercicio, Tema, propiedades FROM Ejercicios WHERE Tema = " + idtema;
         sqlite.obtenerEjercicios(query);
     }
 

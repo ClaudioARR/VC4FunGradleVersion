@@ -1,9 +1,7 @@
 package window;
 
 import acciones_entidades.Actions_Ejercicios;
-import acciones_entidades.Actions_Tema;
 import entidades.Ejercicios;
-import entidades.Tema;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import utilities.Utilities;
 import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
@@ -100,6 +99,7 @@ class ModificarEjercicioWindow {
                 ejercicio.setPropiedades_Ejercicio(respuestaE);
 
                 Actions_Ejercicios.updateEjercicio(ejercicio);
+                Utilities.generatePageE(ejercicio);
 
                 Window_Dialog.display("Modificar Ejercicio", "Ejercicio Modificado Exitosamente");
 

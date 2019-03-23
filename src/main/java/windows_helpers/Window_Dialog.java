@@ -15,7 +15,8 @@ import javafx.stage.Stage;
 public class Window_Dialog {
     public static void display(String title, String message){
 
-        Stage dialog = new Stage();
+        Stage dialog;
+        dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle(title);
 
@@ -31,9 +32,7 @@ public class Window_Dialog {
         Button cerrar = new Button("Cerrar");
         cerrar.setFont(new Font(15));
         cerrar.setPadding(new Insets(10));
-        cerrar.setOnAction(event -> {
-            dialog.close();
-        });
+        cerrar.setOnAction(event -> dialog.close());
         bottom.getChildren().add(cerrar);
         bottom.setAlignment(Pos.CENTER);
         bottom.setPadding(new Insets(5,5,15,5));

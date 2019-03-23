@@ -1,12 +1,10 @@
 package dao;
 
-import acciones_entidades.Actions_Materia;
 import entidades.Ejercicios;
 import entidades.Materia;
 import entidades.Tema;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class SQLite_Connection {
 
@@ -14,10 +12,10 @@ public class SQLite_Connection {
     private Statement sql = null;
     private ResultSet results = null;
 
-    public SQLite_Connection() throws SQLException{}
+    public SQLite_Connection() {}
 
 
-    private void Open() throws SQLException{
+    private void Open() {
         try {
             Class.forName("org.sqlite.JDBC");
             conexion = DriverManager.getConnection("jdbc:sqlite:db//vc.db");

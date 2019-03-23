@@ -1,9 +1,7 @@
 package window;
 
 import acciones_entidades.Actions_Ejercicios;
-import acciones_entidades.Actions_Tema;
 import entidades.Ejercicios;
-import entidades.Tema;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

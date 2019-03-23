@@ -1,12 +1,13 @@
 package window;
 
+import acciones_entidades.Actions_Ejercicios;
 import acciones_entidades.Actions_Materia;
 import acciones_entidades.Actions_Tema;
+import entidades.Ejercicios;
 import entidades.Materia;
 import entidades.Tema;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,33 +20,31 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import utilities.Utilities;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-public class EstudiarWindow {
+class EstudiarWindow {
     static private Stage window = new Stage();
     static private WebEngine weLatex;
 
-    static VBox LEFTSIDE(){
+    private static VBox LEFTSIDE(){
         ObservableList<String> itemsM = FXCollections.observableArrayList();
         ObservableList<String> itemsT = FXCollections.observableArrayList();
+        ObservableList<String> itemsE = FXCollections.observableArrayList();
 
 
-        window.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                try {
-                    Actions_Materia.getMaterias();
-                    for (Materia m:Materia.Materias) {
-                        itemsM.add(m.getNombre_Materia());
-                    }
-
-                } catch (SQLException e) {
-                    e.printStackTrace();
+        window.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
+            try {
+                itemsM.clear();
+                Actions_Materia.getMaterias();
+                for (Materia m:Materia.Materias) {
+                    itemsM.add(m.getNombre_Materia());
                 }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         });
         ComboBox cmbMaterias = new ComboBox<>(itemsM);
@@ -59,7 +58,7 @@ public class EstudiarWindow {
                 for (Tema t: Tema.Temas){
                     itemsT.add(t.getNombre_Tema());
                 }
-            }catch (SQLException ex){
+            }catch (SQLException ignored){
 
             }
         });
@@ -69,16 +68,29 @@ public class EstudiarWindow {
 
         cmbTemas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             try{
-                String nombreTema = cmbTemas.getSelectionModel().getSelectedItem().toString();
-                char[] aux = nombreTema.toCharArray();
-                for(int i = 0; i < aux.length; i++){
-                    if (aux[i] == ' '){
-                        aux[i] = '_';
-                    }
-                }
-                String pageName = new String(aux);
-
+                itemsE.clear();
+                String pageName = Utilities.getFileName(cmbTemas.getSelectionModel().getSelectedItem().toString());
                 File file = new File("pages\\" + pageName + ".html");
+                weLatex.load(file.toURI().toString());
+
+                int tema = cmbTemas.getSelectionModel().getSelectedIndex();
+                int idtema = Tema.Temas.get(tema).getIDTema();
+                Actions_Ejercicios.getEjercicioPorTema(idtema);
+                for (Ejercicios e: Ejercicios.EjerciciosArray){
+                    itemsE.add(String.valueOf(e.getIDEjercicio()));
+                }
+            }catch (Exception ignored){
+
+            }
+        });
+
+        ComboBox cmbEjercicios = new ComboBox(itemsE);
+        cmbEjercicios.setPromptText("Elija Ejercicio");
+
+        cmbEjercicios.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            try{
+                String exerciseName = String.valueOf(cmbEjercicios.getSelectionModel().getSelectedItem());
+                File file = new File("pages\\exercises\\" + exerciseName + ".html");
                 weLatex.load(file.toURI().toString());
             }catch (Exception ignored){
 
@@ -89,7 +101,7 @@ public class EstudiarWindow {
         VBox leftside = new VBox(15);
         leftside.setPadding(new Insets(10));
         leftside.setAlignment(Pos.TOP_LEFT);
-        leftside.getChildren().addAll(cmbMaterias, cmbTemas);
+        leftside.getChildren().addAll(cmbMaterias, cmbTemas, cmbEjercicios);
 
         return leftside;
 
@@ -98,8 +110,6 @@ public class EstudiarWindow {
     static StackPane CENTERSIDE(){
         WebView wvLatex = new WebView();
         weLatex = wvLatex.getEngine();
-
-        //TODO: IMPLEMENTAR EL WEBVIEW
 
         StackPane centerside = new StackPane();
         centerside.setPadding(new Insets(10));

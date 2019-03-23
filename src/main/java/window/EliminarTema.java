@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import utilities.Utilities;
 import windows_helpers.Window_Dialog;
 
 import java.sql.SQLException;
@@ -78,6 +79,7 @@ class EliminarTema {
             try
             {
                 Tema tema  = table_tema.getSelectionModel().getSelectedItem();
+                Utilities.eliminarPageT(tema);
                 Actions_Tema.deleteTema(tema);
 
                 Window_Dialog.display("Elminar Tema", "Tema borrado exitosamente");

@@ -1,13 +1,9 @@
 package entidades;
 
-import dao.SQLite_Connection;
-
 import java.util.ArrayList;
 
 
 public class Materia {
-
-    SQLite_Connection sqlite;
 
     private int IDMateria;
     private String Nombre_Materia;
